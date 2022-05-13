@@ -1,4 +1,4 @@
-<h1 align="center"># Create CentOS8 **WITHOUT** using the AWS Console.</h1>
+<h1 align="center">🐱‍👤 Create CentOS8 **WITHOUT** using the AWS Console.</h1>
 <h3 align="center">Linux CentOS8 CloudFormationTemplate</h3>
 <h3 align="center">Project Task</h3>
 
@@ -20,10 +20,6 @@
 - 👨🏾‍🎓 I was able to check the status by using the following:(aws cloudformation describe-stacks --stack-name firstluitstack) or (aws cloudformation describe-stack-
      events --stack-name firstluitstack)
      
-- 👨🏾‍🎓 **FYI**- You may notice I created another script file within the userdata. **THIS IS NOT NECESSARY AS THE USERDATA IS PRETTY MUCH A BASHSCRIPT WITHIN ITSELF**. I
-     just
-     did that for the sake of the project and to show that I understand how to create a script file within bash. If you want you can remove the script files and it
-     will still work
      <h3 align="center">⚡ By the way I have some of my favorite online games on the default page, have fun</h3>
 
 
