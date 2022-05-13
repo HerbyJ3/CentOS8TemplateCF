@@ -1,4 +1,4 @@
-<h1 align="center"># Create CentOS8 without using the Console.</h1>
+<h1 align="center"># Create CentOS8 without using the AWS Console.</h1>
 <h3 align="center">Linux CentOS8 CloudFormationTemplate</h3>
 <h3 align="center">Project Task</h3>
 
