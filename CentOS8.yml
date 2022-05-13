@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: 'AWS CloudFormation Template for LUIT Week2 Project#1, Linux CENTOS8'
+Resources:
+## Security group for WebInstance enabling port 80 & 22
+  WebSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: web security group
+      GroupName: luit_web     
+      SecurityGroupIngress:
+        -
+          IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: 0.0.0.0/0
+        -  
+          IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+## EC2 Instance with reference to WebSecurityGroup
+  WebInstance:
+    Type: AWS::EC2::Instance
+    Properties:      
+      InstanceType: t2.micro
+      ImageId: ami-0d6e9a57f6259ba3a
+      KeyName: VirginiaKey
+## User data script that installs upate, nginx, and custom html page
+      UserData:
+        Fn::Base64: !Sub |
+            #!/bin/bash              
+            sudo touch script.sh
+            echo '#!/bin/bash' >> script.sh
+            echo "sudo sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*" >> script.sh
+            echo "sudo sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*" >> script.sh
+            echo 'sudo dnf upgrade -y' >> script.sh
+            echo 'sudo dnf install nginx -y' >> script.sh
+            echo 'sudo systemctl enable nginx' >> script.sh
+            echo 'sudo systemctl start nginx' >> script.sh            
+            sudo chmod +x script.sh
+            ./script.sh
+            echo '<html><body style="background-color:black;"><h1 style="text-align: center;"><span style="color: #ff00ff;"><strong>Welcome to LUIT - TEAM SILVER</strong></span></h1><p style="text-align: center;"><span style="color: #ff00ff;"><strong><img src="https://miro.medium.com/max/1400/1*r49ouqlXeZ0zaGONiM6Fvw.jpeg" alt="" width="172" height="42" /></strong></span></p><p><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="https://media.giphy.com/media/20XFN3vWiU79fBQgBc/giphy.gif" alt="" width="800" height="200" /></strong></p><h4 style="text-align: center;"><span style="text-decoration: underline;"><span style="color: #ff00ff; text-decoration: underline;">WEEK2 PROJECT#1</span></span></h4><p style="text-align: center;"><span style="color: #ffffff;"><em>This Project was created using AWS CloudFormation. Once I deploy this CloudFormation template with one code, all of this gets created in one go. Click on my github link below to try out this CloudFormation template. If not play some games below, on me lol. </em></span></p><p style="text-align: center;"><span style="color: #ffffff;"><span style="color: #000000;"><a title="Github" href="https://github.com/HerbyJ3" target="_blank">https://github.com/HerbyJ3</a></span></span></p><p style="text-align: center;"><span style="color: #ffffff;"><span style="color: #000000;"><img src="https://media.giphy.com/media/fsc7c7TYKulQ4lmmAo/giphy.gif" alt="" width="590" height="490" /></span></span></p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: center;">&nbsp;</p><p style="text-align: left;"><span style="color: #ffffff;"><span style="color: #000000;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://media.giphy.com/media/XB3gaBJjllUtBnX8wS/giphy.gif" alt="" width="1000" height="1000" /></span></span></p><p><iframe src="https://www.addictinggames.com/embed/html5-games/25100" width="100%" height="100%" scrolling="no"></iframe><iframe src="https://www.addictinggames.com/embed/html5-games/23032" width="100%" height="100%" scrolling="no"></iframe><br /><br /></p><p><iframe src="https://www.addictinggames.com/embed/html5-games/25045" width="100%" height="100%" scrolling="no"></iframe><iframe src="https://www.addictinggames.com/embed/html5-games/24642" width="100%" height="100%" scrolling="no"></iframe></p></body></html>''' > /usr/share/nginx/html/index.html
+      SecurityGroupIds: 
+        - !GetAtt "WebSecurityGroup.GroupId"
+      Tags:
+        -
+          Key: Name
+          Value: luitwebserver
+## This will display the specific outputs.
+Outputs:
+  PublicIP:
+    Description: Public IP address of the newly created EC2 instance
+    Value: !GetAtt "WebInstance.PublicIp"
+        
+  
