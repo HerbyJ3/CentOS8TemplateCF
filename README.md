@@ -15,7 +15,7 @@
  
 - 👨🏾‍🎓 I created an S3 bucket through powershell and copied the yml file to the s3 bucket (AWS CLI ONLY)
 
-- 👨🏾‍🎓 I ran the code via AWS CLI :(aws cloudformation create-stack --stack-name firstluitstack --template-url https://test239203920.s3.amazonaws.com/CentOS8.yml)
+- 👨🏾‍🎓 I ran the code via AWS CLI :(aws cloudformation create-stack --stack-name firstluitstack --template-url https://**********.s3.amazonaws.com/CentOS8.yml)
 
 - 👨🏾‍🎓 I was able to check the status by using the following:(aws cloudformation describe-stacks --stack-name firstluitstack) or (aws cloudformation describe-stack-
      events --stack-name firstluitstack)
